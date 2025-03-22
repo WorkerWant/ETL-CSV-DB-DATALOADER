@@ -1,0 +1,4 @@
+tpep_pickup_datetime,tpep_dropoff_datetime,passenger_count,trip_distance,store_and_fwd_flag,PULocationID,DOLocationID,fare_amount,tip_amount
+2023-01-01 08:00:00,2023-01-01 08:10:00,1,2.50,N,101,201,10.00,2.00
+2023-01-01 09:00:00,2023-01-01 09:30:00,2,6.10,Y,102,202,18.00,3.00
+2023-01-01 10:00:00,2023-01-01 09:50:00,2,4.00,N,103,203,InvalidFare,1.00

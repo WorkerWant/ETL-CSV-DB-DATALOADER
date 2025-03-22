@@ -1,0 +1,45 @@
+﻿services:
+  db:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: etl_mssql
+    env_file:
+      - .env
+    environment:
+      ACCEPT_EULA: "Y"
+    ports:
+      - "1433:1433"
+    volumes:
+      - mssql_data:/var/opt/mssql
+    healthcheck:
+      test: ["CMD-SHELL", "/opt/mssql-tools18/bin/sqlcmd -S localhost -U SA -P ${SA_PASSWORD} -C -Q \"SELECT 1\""]
+      interval: 10s
+      timeout: 10s
+      retries: 10
+
+  migrate:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    container_name: etl_migrate
+    depends_on:
+      db:
+        condition: service_healthy
+    env_file:
+      - .env
+    volumes:
+      - ./scripts:/scripts
+    command: /opt/mssql-tools18/bin/sqlcmd -S db -U SA -P ${SA_PASSWORD} -C -i /scripts/migration.sql
+    #command: /bin/bash -c "while true; do sleep 3600; done" -- for debug 
+
+  etl:
+    build:
+      context: .
+    container_name: etl_cli
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+    env_file:
+      - .env
+    environment:
+      - ConnectionStrings__DefaultConnection=${CONNECTION_STRING}
+
+volumes:
+  mssql_data:

@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "ETL-CSV-DATALOADER": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
