@@ -73,12 +73,13 @@ This project implements a simple ETL tool in C#. It imports specific columns fro
 
 ## Usage
 
+
 1. **Copy or clone** the repository locally.
 2. **Prepare `.env`** with environment variables:
 ```SA_PASSWORD=YourStrong!Passw0rd CONNECTION_STRING=Server=db;Database=ETL_DataLoaderDB;User=SA;TrustServerCertificate=True;Password=YourStrong!Passw0rd;```
 3. **Place CSV** file(s) in the `Data/` folder (or update paths as needed).
 4. **Run**:
-```docker-compose up --build -d``` IN ETL-CSV-DATALOADER Folder (where docker-compose.yml exists)!!! 
+```docker-compose up --build -d```
 - `db` starts MSSQL.
 - `migrate` runs the SQL migration script, dropping and recreating the database.
 - `etl` runs the ETL program, reading the CSV, converting data, and inserting into `db`.
